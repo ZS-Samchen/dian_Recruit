@@ -5,7 +5,7 @@
 const int T = 10;//T个时刻为一个时段
 int mymin(int x, int y) { return x < y ? x : y; }
 int myabs(int x) { return x < 0 ? -x : x; }
-int n, sum/*电梯内人数*/, num/*当前楼层*/, ti[2][15]/*上下行各层最早请求的人*/;
+int n, sum/*电梯内人数*/, num/*当前楼层*/,ti[2][15];
 int last/*上一次停靠的楼层*/,time/*上次停靠总用时*/,now/*实时时间*/;
 int a[15][1500][2]/*上行呼叫时间、目的地*/, b[15][1500][2], c[15]/*这层下的人数*/;
 int numa[15][1500], numb[15][1500], ab;//用于按呼叫时间降序
@@ -29,15 +29,18 @@ void shang()
 	for (; num <= 10; num++)
 	{
 		now = myabs(num - last) + time;
+		bool bk = false;
 		if (c[num] != 0 || (sum < 4 && oka()))
 		{
+			bk = true;
 			time = now;
 			last = num;
-			printf("%d %d\n", num,time);
+			printf("%d %d ", num,time);
 		}
 		sum -= c[num]; c[num] = 0;//要停靠，先下后上
 		while (sum < 4 && a[num][numa[num][0]][0] <= now/*蜂拥而上*/)
 			sum++, c[a[num][numa[num][0]--][1]]++, n--;
+		if (bk) printf("%d\n", sum);
 		if (sum == 0 && ti[0][num + 1] > time) return;
 	}
 }
@@ -46,15 +49,18 @@ void xia()
 	for (; num >= 1; num--)
 	{
 		now = myabs(num - last) + time;
+		bool bk = false;
 		if (c[num] != 0 || (sum < 4 && okb()))
 		{
+			bk = true;
 			time = now;
 			last = num;
-			printf("%d %d\n", num, time);
+			printf("%d %d ", num, time);
 		}
 		sum -= c[num]; c[num] = 0;//要停靠，先下后上
 		while (sum < 4 && b[num][numb[num][0]][0] <= now/*蜂拥而上*/)
 			sum++, c[b[num][numb[num][0]--][1]]++, n--;
+		if (bk) printf("%d\n", sum);
 		if (sum == 0 && ti[1][num - 1] > time) return;
 	}
 }
@@ -82,7 +88,7 @@ int main()
 		qsort(numa[ab] + 1, numa[ab][0], sizeof(int), cmp1);
 		qsort(numb[ab] + 1, numb[ab][0], sizeof(int), cmp2);
 	}
-	printf("输出格式为停靠楼层+当前时间\n");
+	printf("输出格式为停靠楼层+当前时间+启动时人数\n");
 	while (n != 0)
 	{
 		checka();
