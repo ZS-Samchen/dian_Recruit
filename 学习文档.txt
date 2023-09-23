@@ -3,6 +3,7 @@ Level0-0
 （更新：用#define _CRT_SECURE_NO_WARNINGS解决scanf，不然别的平台跑不了力）
 level0-1
 学习使用git，选择github。因为steam的缘故，有Watt Toolkit，挂起加速来也十分稳定。通过b站教学视频，掌握新建远程仓库的方法，准备在完成level1-1后，再尝试上传文件。
+（后续：github网页版，只要创建readme就可以拖拽上传）
 
 lever0-2
 已具备一定的代码实现能力
